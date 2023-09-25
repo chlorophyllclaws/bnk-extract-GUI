@@ -1,6 +1,8 @@
-# bnk-extract GUI
+# S0NA - the other bnk-extract GUI
 
-An attempt at making a somewhat competently looking gui for my bnk-extract program (see https://github.com/Morilli/bnk-extract).
+An attempt at "beautifying" the GUI for Morilli's bnk-extract program (see https://github.com/Morilli/bnk-extract).
+Mostly because I keep forgetting how to use it and/or which program it actually is.
+
 Written in plain C without any libraries so if something looks dumb or it crashes randomly you know why.
 
 The most current release can be found here: https://github.com/Morilli/bnk-extract-GUI/releases/latest.
