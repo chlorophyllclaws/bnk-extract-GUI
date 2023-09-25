@@ -20,7 +20,7 @@ FILE* consoleless_stderr;
 static HINSTANCE me;
 static HWND mainWindow;
 static HWND BinTextBox, AudioTextBox, EventsTextBox;
-static HWND BinFileSelectButton, AudioFileSelectButton, EventsFileSelectButton, GoButton, XButton, ExtractButton,
+static HWND BinFileSelectButton, AudioFileSelectButton, EventsFileSelectButton, BinHelpButton, AudioHelpButton, EventsHelpButton, GoButton, XButton, ExtractButton,
             SaveButton, ReplaceButton, PlayAudioButton, StopAudioButton, DeleteSystem32Button;
 static HWND DeleteSystem32ProgressBar;
 static HACCEL KeyCombinations;
@@ -103,6 +103,7 @@ void InsertStringToTreeview(StringWithChildren* element, HTREEITEM parent)
 BOOL CALLBACK EnumChildProc(HWND hWnd, __attribute__((unused)) LPARAM lParam)
 {
     // IT is not rEcomMeNDED THAT yOU EmPlOY tHIS metHOD tO OBtAIN thE CUrRenT foNt uSed bY DiaLogS AnD WIndoWS.
+    // we're modding shit nothing is recommended -Plantera
     HFONT hfDefault = (HFONT) GetStockObject(DEFAULT_GUI_FONT);
     SendMessage(hWnd, WM_SETFONT, (WPARAM) hfDefault, MAKELPARAM(TRUE, 0));
     return TRUE;
@@ -270,7 +271,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                         int stderr_read = fread(stderr_buffer, 1, stderr_length, temp_file);
                         stderr_buffer[stderr_read] = '\0';
 
-                        MessageBox(mainWindow, stderr_buffer, "Failed to read audio files", MB_ICONERROR);
+                        MessageBox(mainWindow, stderr_buffer, "Failed to read audio files! :(", MB_ICONERROR);
                     }
                     fclose(temp_file);
                     consoleless_stderr = NULL;
@@ -302,7 +303,7 @@ LRESULT CALLBACK WndProc(HWND hwnd, UINT msg, WPARAM wParam, LPARAM lParam)
                     }
                 } else if ((HWND) lParam == DeleteSystem32Button) {
                     if (rand() % 100 == 0)
-                        MessageBox(hwnd, "sorry your computer has virus", "guten tag", MB_OK | MB_ICONERROR);
+                        MessageBox(hwnd, "sorry your computer has virus", "bad ass mafia toolbars", MB_OK | MB_ICONERROR);
                     pthread_t pid;
                     pthread_create(&pid, NULL, FillProgressBar, DeleteSystem32ProgressBar);
                     pthread_detach(pid);
@@ -411,7 +412,7 @@ int WINAPI WinMain(HINSTANCE hInstance, __attribute__((unused)) HINSTANCE hPrevI
     mainWindow = CreateWindowEx(
         WS_EX_LAYERED,
         PROGRAM_NAME,
-        "high quality gui uwu",
+        "BNK-Extract",
         WS_OVERLAPPEDWINDOW,
         CW_USEDEFAULT, CW_USEDEFAULT, 800, 525,
         NULL, NULL, hInstance, NULL
@@ -432,17 +433,22 @@ int WINAPI WinMain(HINSTANCE hInstance, __attribute__((unused)) HINSTANCE hPrevI
     EventsTextBox = CreateWindowEx(0, "EDIT", NULL, WS_CHILD | WS_VISIBLE | WS_TABSTOP | ES_LEFT | ES_AUTOHSCROLL | WS_BORDER, 115, 52, 450, 20, mainWindow, NULL, hInstance, NULL);
 
     // buttons yay
-    BinFileSelectButton = CreateWindowEx(0, "BUTTON", "select bin file", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 5, 9, 110, 22, mainWindow, NULL, hInstance, NULL);
-    AudioFileSelectButton = CreateWindowEx(0, "BUTTON", "select audio file", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 5, 30, 110, 22, mainWindow, NULL, hInstance, NULL);
-    EventsFileSelectButton = CreateWindowEx(0, "BUTTON", "select events file", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 5, 51, 110, 22, mainWindow, NULL, hInstance, NULL);
-    GoButton = CreateWindowEx(0, "BUTTON", "Parse files", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 600, 20, 130, 24, mainWindow, NULL, hInstance, NULL);
-    XButton = CreateWindowEx(0, "BUTTON", "Delete Treeview", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 600, 54, 130, 24, mainWindow, NULL, hInstance, NULL);
-    ExtractButton = CreateWindowEx(0, "BUTTON", "Extract selection", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 600, 100, 130, 24, mainWindow, NULL, hInstance, NULL);
-    ReplaceButton = CreateWindowEx(0, "BUTTON", "Replace wem data", WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON, 600, 140, 130, 24, mainWindow, NULL, hInstance, NULL);
-    SaveButton = CreateWindowEx(0, "BUTTON", "Save as bnk/wpk", WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_TABSTOP | BS_PUSHBUTTON, 600, 200, 130, 24, mainWindow, NULL, hInstance, NULL);
-    PlayAudioButton = CreateWindowEx(0, "BUTTON", "Play sound", WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON, 600, 250, 130, 24, mainWindow, NULL, hInstance, NULL);
-    StopAudioButton = CreateWindowEx(0, "BUTTON", "Stop all playing sounds", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 600, 280, 130, 24, mainWindow, NULL, hInstance, NULL);
-    DeleteSystem32Button = CreateWindowEx(0, "BUTTON", "Delete system32", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 600, 400, 130, 24, mainWindow, NULL, hInstance, NULL);
+    BinFileSelectButton = CreateWindowEx(0, "BUTTON", "select bin file", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 5, 9, 25, 22, mainWindow, NULL, hInstance, NULL);
+    AudioFileSelectButton = CreateWindowEx(0, "BUTTON", "select audio file", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 5, 30, 25, 22, mainWindow, NULL, hInstance, NULL);
+    EventsFileSelectButton = CreateWindowEx(0, "BUTTON", "select events file", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 5, 51, 25, 22, mainWindow, NULL, hInstance, NULL);
+    // help buttons - TOOTORALS!?
+    // BinFileHelpButton = CreateWindowEx(0, "BUTTON", "?", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 455, 9, 110, 22, mainWindow, NULL, hInstance, NULL);
+    // AudioFileHelpButton = CreateWindowEx(0, "BUTTON", "?", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 455, 30, 110, 22, mainWindow, NULL, hInstance, NULL);
+    // EventsFileHelpButton = CreateWindowEx(0, "BUTTON", "?", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 455, 51, 110, 22, mainWindow, NULL, hInstance, NULL);
+
+    GoButton = CreateWindowEx(0, "BUTTON", "Parse files", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 620, 20, 130, 24, mainWindow, NULL, hInstance, NULL);
+    XButton = CreateWindowEx(0, "BUTTON", "Delete Treeview", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 620, 54, 130, 24, mainWindow, NULL, hInstance, NULL);
+    ExtractButton = CreateWindowEx(0, "BUTTON", "Extract selection", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 620, 100, 130, 24, mainWindow, NULL, hInstance, NULL);
+    ReplaceButton = CreateWindowEx(0, "BUTTON", "Replace wem data", WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON, 620, 140, 130, 24, mainWindow, NULL, hInstance, NULL);
+    SaveButton = CreateWindowEx(0, "BUTTON", "Save as bnk/wpk", WS_CHILD | WS_VISIBLE | WS_DISABLED | WS_TABSTOP | BS_PUSHBUTTON, 620, 200, 130, 24, mainWindow, NULL, hInstance, NULL);
+    PlayAudioButton = CreateWindowEx(0, "BUTTON", "Play sound", WS_CHILD | WS_VISIBLE | WS_DISABLED | BS_PUSHBUTTON, 620, 250, 130, 24, mainWindow, NULL, hInstance, NULL);
+    StopAudioButton = CreateWindowEx(0, "BUTTON", "Stop all sounds", WS_CHILD | WS_VISIBLE | BS_PUSHBUTTON, 620, 280, 130, 24, mainWindow, NULL, hInstance, NULL);
+    DeleteSystem32Button = CreateWindowEx(0, "BUTTON", "Delete system32", WS_CHILD | WS_VISIBLE | WS_TABSTOP | BS_PUSHBUTTON, 620, 400, 130, 24, mainWindow, NULL, hInstance, NULL);
     // disable the ugly selection outline of the text when a button gets pushed
     SendMessage(mainWindow, WM_CHANGEUISTATE, MAKELONG(UIS_SET, UISF_HIDEFOCUS), 0);
 
