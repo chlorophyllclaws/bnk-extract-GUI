@@ -1,7 +1,10 @@
 # S0NA - the other bnk-extract GUI
 
-An attempt at "beautifying" the GUI for Morilli's bnk-extract program (see https://github.com/Morilli/bnk-extract).
-Mostly because I keep forgetting how to use it and/or which program it actually is.
+An attempt at "beautifying" the GUI for Morilli's bnk-extract program (see https://github.com/Morilli/bnk-extract) because I keep forgetting how to use it and/or which program it actually is.
+
+this has been abandoned as i ceased working on/updating my LoL data, but may be picked back up at some point. who knows.
+
+
 
 Written in plain C without any libraries so if something looks dumb or it crashes randomly you know why.
 
